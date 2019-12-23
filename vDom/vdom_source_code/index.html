@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>vdom</title>
+    <script src="vdom.js"></script>
+    <style>
+        .item-node {
+            background-color: aqua
+        }
+        .item-n{
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+        // 1.创建虚拟dom
+        const vnode = createElement('div', null, [
+            createElement('p', { key: 'a', style: { color: 'red' ,fontSize: '40px'} , class: 'item-node'}, '节点1'),
+            createElement('p', {  key: 'b', class: 'item-node' }, '节点2'),
+            createElement('p', {  key: 'c', '@click': () => alert('xxx') }, '节点3'),
+            createElement('p', {  key: 'g', class: 'item-n' }, '节点g'),
+        ])
+
+        const vnode1 = createElement('div', null, [
+            createElement('p', {  key: 'b', style: { color: 'blue' } }, '节点b'),
+            createElement('p', {  key: 'c'}, [createElement('a',{href:'https://kaikeba.com'},'新增元素标签')]),
+            createElement('p', {  key: 'd', class: 'item-n' }, '节点4'),
+            createElement('a', {  key: 'f', href: 'https://baidu.com','@mouseover' : () => {alert('hello')}}, '节点a'),
+            createElement('p', { key: 'a', style: { color: 'red' ,fontSize: '40px'} , class: 'item-node'}, '节点1'),
+        ])
+        console.log(JSON.stringify(vnode, null, '\t'))
+        // 2.渲染虚拟dom
+        render(vnode, document.getElementById('app'))
+
+        // 3.3s后再次渲染
+        setTimeout(()=>{
+            render(vnode1, document.getElementById('app'))
+        }, 3000)
+
+    </script>
+</body>
+
+</html>
